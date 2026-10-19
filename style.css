@@ -78,3 +78,256 @@ body {
     right: 20px;     /* 20 pixels in from the right */
     z-index: 10;   /* Keeps it floating on top of everything else */
 }
+
+
+
+/* Main Floating Taskbar Body */
+.aero-taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(20, 35, 55, 0.4) 0%, rgba(10, 15, 25, 0.6) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 -2px 10px rgba(0, 0, 0, 0.3);
+    
+    /* Genuine Aero Backdrop Blur */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-sizing: border-box;
+    z-index: 99999; /* Ensures it stays stacked above your draggable content */
+    user-select: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Glass Highlight Stripe across the taskbar */
+.aero-taskbar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 45%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+}
+
+/* Glowing Start Orb */
+.start-orb {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    background: radial-gradient(circle at center, #2e8bff 0%, #104fa8 70%, #05204a 100%);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 0 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position: relative;
+    bottom: 2px; /* Lets it slightly bulge out over the top of the bar */
+    transition: all 0.2s ease-in-out;
+}
+
+.start-orb:hover {
+    background: radial-gradient(circle at center, #5cb0ff 0%, #1a71e6 60%, #0a3d85 100%);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6), 0 0 12px rgba(0, 162, 255, 0.8);
+    transform: scale(1.05);
+}
+
+/* Miniature flag wrapper or core graphic inside the orb */
+.orb-logo {
+    width: 14px;
+    height: 14px;
+    background: rgba(255,255,255,0.7);
+    margin: 0 auto;
+    clip-path: polygon(0 0, 100% 15%, 100% 85%, 0 100%); /* Replicates a subtle retro wave */
+    box-shadow: 0 0 4px rgba(255,255,255,0.8);
+}
+
+/* Active Running Task Buttons */
+.taskbar-apps {
+    flex-grow: 1;
+    display: flex;
+    gap: 6px;
+    padding-left: 15px;
+}
+
+.task-icon {
+    width: 45px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.task-icon:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.task-icon.active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Right System Tray & Clock Container */
+.system-tray {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 1px solid rgba(255,255,255,0.15);
+    padding-left: 10px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+}
+
+.tray-icons {
+    letter-spacing: 4px;
+    opacity: 0.8;
+}
+
+.tray-clock {
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    font-weight: 500;
+}
+
+/* start menu stuffff */
+/* Start Menu Container */
+.aero-start-menu {
+    position: absolute;
+    bottom: 45px; /* Sits 5px above the taskbar */
+    left: 10px;
+    width: 380px;
+    height: 420px;
+    background: linear-gradient(180deg, rgba(20, 35, 55, 0.8) 0%, rgba(10, 15, 25, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 999999;
+    
+    /* Hidden by default, toggled via JavaScript helper classes */
+    display: none; 
+}
+
+/* Open Visibility State */
+.aero-start-menu.open {
+    display: block;
+}
+
+.start-menu-content {
+    display: flex;
+    height: 100%;
+}
+
+/* Left White/Light Panel for applications shortcuts */
+.start-left-panel {
+    width: 60%;
+    background: rgba(0, 162, 255, 0.8);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.start-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    text-decoration: none;
+    color: #111;
+    font-size: 13px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+}
+
+.start-item:hover {
+    background: linear-gradient(180deg, rgba(180, 220, 255, 0.6) 0%, rgba(140, 200, 255, 0.7) 100%);
+    border-color: rgba(100, 180, 255, 0.8);
+}
+
+.start-separator {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 8px 5px;
+}
+
+/* Right Slate Blue Sidebar for folders/utilities */
+.start-right-panel {
+    width: 40%;
+    background: rgba(10, 25, 45, 0.2);
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Profile Icon Space on the Right Bar */
+.user-avatar-space {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.user-name {
+    color: #fff;
+    font-weight: bold;
+    font-size: 13px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.start-right-item {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 3px;
+    margin-bottom: 2px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.start-right-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.start-right-separator {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 8px 5px;
+}
+
+/* Shutdown Row */
+.power-panel {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.power-btn {
+    background: linear-gradient(180deg, #4c627a 0%, #203144 100%);
+    border: 1px solid #111;
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.power-btn:hover {
+    background: linear-gradient(180deg, #ff4c4c 0%, #b31010 100%);
+    border-color: #570000;
+}
