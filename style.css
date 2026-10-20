@@ -232,7 +232,7 @@ body {
 /* Left White/Light Panel for applications shortcuts */
 .start-left-panel {
     width: 60%;
-    background: rgba(0, 162, 255, 0.8);
+    background: linear-gradient(180deg, rgba(10, 162, 255, 0.95) 0%, rgba(33, 144, 255, 0.8) 100%);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     padding: 15px 10px;
